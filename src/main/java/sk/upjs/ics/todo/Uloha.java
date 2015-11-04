@@ -10,7 +10,9 @@ public class Uloha {
     
     private Date date;
     
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("d.M.yyyy");    
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("d.M.yyyy"); 
+    
+    private boolean splnena;
 
     public Long getId() {
         return id;
@@ -35,6 +37,18 @@ public class Uloha {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    public boolean isSplnena() {
+        return splnena;
+    }
+
+    public void setSplnena(boolean splnena) {
+        this.splnena = splnena;
+    }
+
+
+    
+    
 
     @Override
     public String toString() {

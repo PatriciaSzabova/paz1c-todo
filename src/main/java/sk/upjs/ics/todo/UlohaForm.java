@@ -1,6 +1,8 @@
 package sk.upjs.ics.todo;
 
 import java.awt.Frame;
+import java.util.Date;
+import javax.swing.JOptionPane;
 
 
 
@@ -20,6 +22,8 @@ public class UlohaForm extends javax.swing.JDialog {
     UlohaForm(Frame parent, boolean modal, Uloha uloha) {
        super(parent, modal);
        initComponents();
+       
+       setLocationRelativeTo(null);
        
        this.uloha = uloha;
        
@@ -116,8 +120,24 @@ public class UlohaForm extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        uloha.setNazov(nazovTextField.getText());
-        uloha.setDate(terminDatePicker.getDate());
+        String nazov = nazovTextField.getText();
+        if(nazov.trim().isEmpty()){ //osetrenie medzier - trim
+            JOptionPane.showMessageDialog(this, "Nazov je povinny");
+            return;
+        }
+        
+           Date date = terminDatePicker.getDate();
+        if(date == null){
+            date = new Date();
+        }
+        
+        if(date.before(new Date())){
+          JOptionPane.showMessageDialog(this, "Datum je neplatny", "Chyba", JOptionPane.ERROR_MESSAGE);
+            return;  
+        }
+        
+        uloha.setNazov(nazov);
+        uloha.setDate(date);
         uloha.setSplnena(splnenaCheckBox.isSelected());
         
         ulohaDao.upravit(uloha);
